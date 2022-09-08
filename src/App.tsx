@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useContext } from 'react';
+import { useCommon, CommonContext } from '@winshare/common-store';
+// import { useCommon, CommonContext } from './store';
+import Demo from '@winshare/demo';
+
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
+  const { common, dispatchCommon } = useCommon();
+  // const { common, dispatchCommon } = useContext<any>(CommonContext);
+  console.log('common', common);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <span>
+        -----------------这里是写入组件的context------------------
+      </span>
+      <p>name:{common?.name}</p>
+      <p>version:{common?.version}</p>
+      <button
+        onClick={() =>
+          dispatchCommon({
+            type: 'UPDATE_COMMON',
+            payload: {
+              name: '33333',
+              version: '0.3.0',
+            },
+          })
+        }
+      >
+        changeData
+      </button>
+
+      <fieldset>
+        <span>
+          -----------------这里是引入的@winshare/demo包------------------
+        </span>
+        <Demo />
+      </fieldset>
     </div>
   );
-}
+};
 
 export default App;
